@@ -1,0 +1,119 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>it.gov.salute</groupId>
+	<artifactId>sdk-lib-interconnessione</artifactId>
+	<url>http://.interconnessioneapi.accenture.com</url>
+	<version>2.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>sdk-lib-interconnessione</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+		<spring.version>4.1.3.RELEASE</spring.version>
+	</properties>
+
+	<dependencies>
+		<!-- http://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.54</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.gov.salute</groupId>
+			<artifactId>sdk-lib-crypto</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+	<!-- Genera un sito web con tutti i javadoc esportati, può impiegare parecchio tempo
+		<reporting>
+		<plugins>
+		<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-javadoc-plugin</artifactId>
+		<version>2.10.3</version>
+		</plugin>
+		<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-project-info-reports-plugin</artifactId>
+		<version>2.8</version>
+		</plugin>
+		</plugins>
+		</reporting>
+	-->
+	<build>
+
+		<finalName>${project.artifactId}-${project.version}</finalName>
+
+		<!-- decommentare il blocco seguente per inserire anche i sorgenti nel jar prodotto in fase di packaging -->
+		<!-- <resources>
+			<resource>
+			<directory>src/main/java</directory>
+			<includes>
+			<include>**/*.java</include>
+			</includes>
+			</resource>
+			</resources> -->
+
+		<plugins>
+
+			<!-- Jdk level -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- decommentare il blocco seguente per generare un jar ausiliario contenente tutti i sorgenti dell'applicazione -->
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+				<execution>
+				<id>attach-sources</id>
+				<goals>
+				<goal>jar</goal>
+				</goals>
+				</execution>
+				</executions>
+				</plugin> -->
+
+			<!-- decommentare il blocco seguente per creare, in fase di build, una cartella contenente tutti i jar delle dipendenze dell'applicazione -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/InterconnessioneApi_lib
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
